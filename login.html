@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - BuildRite</title>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/BriX Logo.png" type="image/svg+xml">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --dark-jungle-green: hsl(188, 63%, 7%);
+      --prussian-blue: hsl(200, 69%, 14%);
+      --orange-soda: hsl(9, 100%, 62%);
+      --cultured-2: hsl(192, 24%, 96%);
+      --white: hsl(0, 0%, 100%);
+      --cadet: hsl(200, 15%, 43%);
+      --ff-nunito-sans: "Nunito Sans", sans-serif;
+      --ff-poppins: "Poppins", sans-serif;
+      --transition: 0.25s ease;
+    }
+
+    body {
+      background: var(--cultured-2);
+      font-family: var(--ff-nunito-sans);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 16px 32px hsla(188, 63%, 7%, 0.1);
+      overflow: hidden;
+      border-top: 4px solid var(--orange-soda);
+    }
+
+    .auth-header {
+      background: var(--white);
+      padding: 2rem 1rem 0.5rem 1rem;
+      text-align: center;
+    }
+
+    .auth-header img {
+      max-width: 180px;
+      margin-bottom: 10px;
+    }
+
+    .nav-tabs {
+      border-bottom: 2px solid #eee;
+      margin-bottom: 1rem;
+    }
+
+    .nav-tabs .nav-link {
+      border: none;
+      font-family: var(--ff-poppins);
+      font-weight: 600;
+      color: var(--cadet);
+      font-size: 1rem;
+      padding: 1rem;
+      transition: var(--transition);
+    }
+
+    .nav-tabs .nav-link:hover {
+      color: var(--orange-soda);
+    }
+
+    .nav-tabs .nav-link.active {
+      color: var(--orange-soda);
+      background-color: transparent;
+      border-bottom: 2px solid var(--orange-soda);
+    }
+
+    .form-label {
+      color: var(--dark-jungle-green);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: var(--ff-nunito-sans);
+    }
+
+    .form-control:focus {
+      border-color: var(--orange-soda);
+      box-shadow: 0 0 0 0.25rem hsla(9, 100%, 62%, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--orange-soda);
+      border: 1px solid var(--orange-soda);
+      color: var(--white);
+      font-family: var(--ff-poppins);
+      font-weight: 600;
+      padding: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+      background: var(--dark-jungle-green);
+      border-color: var(--dark-jungle-green);
+      color: var(--white);
+    }
+
+    .form-footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--cadet);
+      margin-top: 1.5rem;
+    }
+
+    .form-footer a {
+      color: var(--orange-soda);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .form-footer a:hover {
+      color: var(--dark-jungle-green);
+    }
+
+    /* Alerts */
+    .alert {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <!-- Replaced empty header with LOGO -->
+      <img src="images/logobuild.png" alt="BuildRite Co." class="img-fluid">
+    </div>
+
+    <ul class="nav nav-tabs justify-content-center mt-2" id="authTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab">Signup</button>
+      </li>
+    </ul>
+
+    <div class="tab-content p-4 pt-2" id="authTabsContent">
+      
+      <!-- LOGIN FORM -->
+      <div class="tab-pane fade show active" id="login" role="tabpanel">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+          </div>
+          <div id="loginMessage" class="alert alert-danger d-none" role="alert"></div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <div class="form-footer">
+          Don't have an account? <a href="#" onclick="document.getElementById('signup-tab').click()">Signup now</a>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="tab-pane fade" id="signup" role="tabpanel">
+        <form id="signupForm">
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="signupName" placeholder="Jb Concha" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="signupEmail" placeholder="you@example.com" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Create Password</label>
+            <input type="password" class="form-control" id="signupPassword" placeholder="Choose password" required>
+          </div>
+          <div id="signupMessage" class="alert d-none" role="alert"></div>
+          <button type="submit" class="btn btn-primary w-100">Create Account</button>
+        </form>
+        <div class="form-footer">
+          Already have an account? <a href="#" onclick="document.getElementById('login-tab').click()">Login here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Login Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const signupForm = document.getElementById('signupForm');
+      const signupEmailInput = document.getElementById('signupEmail');
+      const signupPasswordInput = document.getElementById('signupPassword');
+      const signupMessage = document.getElementById('signupMessage');
+      const loginTabButton = document.getElementById('login-tab');
+
+      const getAccounts = () => {
+        const accountsJson = localStorage.getItem('userAccounts');
+        return accountsJson ? JSON.parse(accountsJson) : [];
+      };
+
+      const saveAccounts = (accounts) => {
+        localStorage.setItem('userAccounts', JSON.stringify(accounts));
+      };
+
+      const setFieldFeedback = (input, isSuccess) => {
+        if (!input) return;
+        input.classList.remove('is-valid', 'is-invalid');
+        if (isSuccess !== null) {
+          input.classList.add(isSuccess ? 'is-valid' : 'is-invalid');
+        }
+      };
+
+      const displayAuthMessage = (element, message, type) => {
+        if (!element) return;
+        element.textContent = message;
+        element.className = 'alert alert-' + type + ' mt-3';
+        element.classList.remove('d-none');
+        setTimeout(() => {
+          element.classList.add('d-none');
+        }, 5000);
+      };
+
+      // SIGNUP LOGIC
+      if (signupForm) {
+        signupForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          setFieldFeedback(signupEmailInput, null);
+          setFieldFeedback(signupPasswordInput, null);
+
+          const email = signupEmailInput.value.toLowerCase();
+          const password = signupPasswordInput.value;
+          const name = document.getElementById('signupName').value;
+          const accounts = getAccounts();
+
+          if (accounts.some(account => account.email === email)) {
+            setFieldFeedback(signupEmailInput, false);
+            displayAuthMessage(signupMessage, 'Error: An account with this email already exists.', 'danger');
+            return;
+          }
+
+          if (password.length < 6) {
+            setFieldFeedback(signupPasswordInput, false);
+            displayAuthMessage(signupMessage, 'Password must be at least 6 characters long.', 'danger');
+            return;
+          }
+
+          const newAccount = { email, password, name };
+          accounts.push(newAccount);
+          saveAccounts(accounts);
+
+          setFieldFeedback(signupEmailInput, true);
+          setFieldFeedback(signupPasswordInput, true);
+          displayAuthMessage(signupMessage, 'Success! Account created.', 'success');
+          signupForm.reset();
+
+          setTimeout(() => {
+            loginTabButton.click();
+            setFieldFeedback(document.getElementById('loginEmail'), null);
+            setFieldFeedback(document.getElementById('loginPassword'), null);
+          }, 1500);
+        });
+      }
+
+      // LOGIN LOGIC
+      const loginForm = document.getElementById('loginForm');
+      const loginEmailInput = document.getElementById('loginEmail');
+      const loginPasswordInput = document.getElementById('loginPassword');
+      const loginMessage = document.getElementById('loginMessage');
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          setFieldFeedback(loginEmailInput, null);
+          setFieldFeedback(loginPasswordInput, null);
+
+          const email = loginEmailInput.value.toLowerCase();
+          const password = loginPasswordInput.value;
+          const accounts = getAccounts();
+
+          const user = accounts.find(account =>
+            account.email === email && account.password === password
+          );
+
+          if (user) {
+            setFieldFeedback(loginEmailInput, true);
+            setFieldFeedback(loginPasswordInput, true);
+
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            if (loginMessage) loginMessage.classList.add('d-none');
+
+            // Redirect to main page
+            window.location.href = './index.html';
+          } else {
+            setFieldFeedback(loginEmailInput, false);
+            setFieldFeedback(loginPasswordInput, false);
+            displayAuthMessage(loginMessage, 'Invalid email or password. Please try again.', 'danger');
+          }
+        });
+      }
+
+      // Cleanup on Tab Switch
+      document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('click', () => {
+          setFieldFeedback(loginEmailInput, null);
+          setFieldFeedback(loginPasswordInput, null);
+          if (loginMessage) loginMessage.classList.add('d-none');
+
+          setFieldFeedback(signupEmailInput, null);
+          setFieldFeedback(signupPasswordInput, null);
+          const signupNameInput = document.getElementById('signupName');
+          if (signupNameInput) signupNameInput.classList.remove('is-valid', 'is-invalid');
+          if (signupMessage) signupMessage.classList.add('d-none');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
